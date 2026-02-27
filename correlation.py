@@ -3,7 +3,7 @@ import pandas as pd
 path = "predictive_maintenance.csv"
 data = pd.read_csv(path, delimiter=',')
 
-# Ausgabe der Korrelationen
+
 correlations = data[data.columns].corr(numeric_only=True)
 #print(correlations)
 print('All correlations')
