@@ -13,7 +13,7 @@ print("Empty columns: ", data.columns[data.isnull().any()])
 # Delete "UDI" as it is only a Data-ID
 data.drop(['Failure Type', 'UDI'], axis = 1, inplace=True)
 
-#Select "Target" as value to be predicted
+# Select "Target" as value to be predicted
 col = data['Target']
 col = pd.get_dummies(col, dtype=float)
 data = data.drop(['Target'], axis = 1)
@@ -30,7 +30,7 @@ data[conv_num] = data[conv_num].apply(lambda x: x.cat.codes)
 s_scaler = StandardScaler()
 
 # Spalten für StandardScaler
-cols_to_s_scale = ['Air temperature [K]','Process temperature [K]','Rotational speed [rpm]','Torque [Nm]','Tool wear [min]']
+cols_to_s_scale = ['Air temperature K','Process temperature K','Rotational speed rpm','Torque Nm','Tool wear min']
 data[cols_to_s_scale] = s_scaler.fit_transform(data[cols_to_s_scale])
 
 #print(data.head())
