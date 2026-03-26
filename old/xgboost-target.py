@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 
 # Load dataset
-path = "data/predictive_maintenance.csv"
+path = "../Data/predictive_maintenance.csv"
 data = pd.read_csv(path, delimiter=',')
 
 # Drop identifiers and columns that cause data leakage
