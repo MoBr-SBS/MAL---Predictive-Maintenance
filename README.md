@@ -3,9 +3,17 @@
 Dieses Projekt zeigt, wie man mit Machine Learning Maschinenfehler frühzeitig erkennen kann.  
 Dafür werden Prozessdaten wie Temperatur, Drehzahl, Drehmoment und Werkzeugverschleiß ausgewertet.
 
+## Erster Schritt: Korrelationsanalyse
+
+Als erster Schritt wurde mit der Datei `correlation.py` eine Korrelationsanalyse durchgeführt.  
+Damit konnten die numerischen Merkmale des Datensatzes zunächst grundlegend untersucht und erste Zusammenhänge erkannt werden.
+
+Diese Analyse war wichtig, um ein besseres Verständnis für die Daten zu bekommen und auffällige Beziehungen zwischen den Variablen zu finden.  
+Darauf aufbauend wurden anschließend Scatterplots erstellt und später das Modell trainiert.
+
 ## Datenanalyse und Korrelation
 
-Zur ersten Auswertung wurden mehrere Scatterplots erstellt, um Zusammenhänge zwischen den Merkmalen sichtbar zu machen.  
+Zur weiteren Auswertung wurden mehrere Scatterplots erstellt, um Zusammenhänge zwischen den Merkmalen sichtbar zu machen.  
 Die blauen Punkte stehen für normale Zustände (`Target = 0`), die roten Punkte für Fehlerfälle (`Target = 1`).
 
 ### Air temperature und Process temperature
@@ -26,7 +34,7 @@ Zwischen Drehmoment und Drehzahl ist ein klarer negativer Zusammenhang zu erkenn
 
 Auffällig ist außerdem, dass bei höheren Drehzahlen insgesamt deutlich mehr Fehlerfälle zu sehen sind. Die roten Punkte häufen sich in bestimmten Bereichen des Diagramms, was darauf hindeutet, dass Aussetzer oder Fehler nicht nur bei hoher Belastung, sondern auch in Bereichen mit hoher Drehzahl häufiger auftreten können.
 
-Der Plot zeigt damit, dass die Kombination aus Drehmoment und Drehzahl ein wichtiger Hinweis auf den Maschinenzustand ist. 
+Der Plot zeigt damit, dass die Kombination aus Drehmoment und Drehzahl ein wichtiger Hinweis auf den Maschinenzustand ist.
 
 <p align="center">
   <img src="images/Korrelation_2.png" width="700">
@@ -46,8 +54,8 @@ Trotzdem ist der Plot interessant, weil man sieht, dass bei höherem Verschleiß
 ## Training
 
 Für die Vorhersage wurde ein XGBoost-Modell verwendet.  
-Vor dem Training wurden die Daten vorbereitet, neue Features erzeugt und die Klassen mit SMOTE ausgeglichen. 
-(für eine ausührliche Quellcode Dokumentation siehe documenation/xgboost_FT.ipynb)
+Vor dem Training wurden die Daten vorbereitet, neue Features erzeugt und die Klassen mit SMOTE ausgeglichen.  
+Für eine ausführlichere Quellcode-Dokumentation siehe `documentation/xgboost_FT.ipynb`.
 
 ## Confusion Matrix
 
