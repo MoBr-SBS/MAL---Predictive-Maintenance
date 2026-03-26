@@ -88,3 +88,6 @@ Besonders deutlich wurde, dass einzelne Merkmale allein oft nicht ausreichen. Er
 
 Vor allem der Zusammenhang zwischen Drehmoment und Drehzahl sowie die Bedeutung der Temperaturdifferenz zeigen, dass technische Prozesse nicht nur über Einzelwerte, sondern über ihr Zusammenspiel verstanden werden müssen.  
 Damit bietet das Projekt einen guten Einblick in das Thema Predictive Maintenance.
+
+> [!Note]
+> Bei der Umsetzung dieses Projekts wurden ChatGPT und Google Gemini als unterstützende Werkzeuge verwendet.
