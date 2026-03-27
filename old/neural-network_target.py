@@ -1,43 +1,56 @@
+import tensorflow as tf
 import pandas as pd
-import xgboost as xgb
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 
-# Load dataset
-path = "../Data/predictive_maintenance.csv"
+path = "predictive_maintenance.csv"
 data = pd.read_csv(path, delimiter=',')
+print(data.head())
+print("Empty columns: ", data.columns[data.isnull().any()])
 
-# Drop identifiers and columns that cause data leakage
-data.drop(['Failure Type', 'UDI'], axis=1, inplace=True)
+# Delete "Failure Type" to prevent Data-Leakage
+# Delete "UDI" as it is only a Data-ID
+data.drop(['Failure Type', 'UDI'], axis = 1, inplace=True)
 
-# Separate target and features
-y = data['Target']
-X = data.drop(['Target'], axis=1)
+#Select "Target" as value to be predicted
+col = data['Target']
+col = pd.get_dummies(col, dtype=float)
+data = data.drop(['Target'], axis = 1)
 
-# Encode categorical features
-categorical_cols = ['Product ID', 'Type']
-X[categorical_cols] = X[categorical_cols].astype('category')
-X[categorical_cols] = X[categorical_cols].apply(lambda x: x.cat.codes)
+# converting strings to numbers
+conv_num = ['Product ID','Type']
+data[conv_num] = data[conv_num].astype('category')
+data[conv_num] = data[conv_num].apply(lambda x: x.cat.codes)
 
-# Split into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+#print(data.shape)
+#print(data.shape[1])
 
-# Initialize XGBoost classifier
-model = xgb.XGBClassifier(
-    n_estimators=100,
-    max_depth=6,
-    learning_rate=0.1,
-    random_state=42,
-    use_label_encoder=False
-)
+# Erzeuge Objekte
+s_scaler = StandardScaler()
 
-# Train model
-model.fit(X_train, y_train)
+# Spalten für StandardScaler
+cols_to_s_scale = ['Air temperature [K]','Process temperature [K]','Rotational speed [rpm]','Torque [Nm]','Tool wear [min]']
+data[cols_to_s_scale] = s_scaler.fit_transform(data[cols_to_s_scale])
 
-# Evaluation
-y_pred = model.predict(X_test)
-accuracy = accuracy_score(y_test, y_pred)
+#print(data.head())
 
-print(f'XGBoost Test Accuracy: {accuracy:.4f}')
-print("\nDetailed Classification Report:")
-print(classification_report(y_test, y_pred))
+# Aus den zwei Tabellen vier Tabellen erzeugen
+train_data, test_data, train_col, test_col = train_test_split(data,col, test_size=0.2, random_state=42)
+
+# Aufbau KNN
+model = tf.keras.Sequential()
+model.add(tf.keras.Input(shape=(data.shape[1],)))
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(256, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(64, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(2, activation=tf.nn.softmax))
+
+# Konfiguration des Lernprozesses
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+# 10 Durchläufe
+model.fit(train_data, train_col, epochs=10)
+
+test_loss, test_acc = model.evaluate(test_data, test_col)
+print('Test accuracy:', test_acc)
