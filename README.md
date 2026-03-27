@@ -1,7 +1,8 @@
 # Predictive Maintenance with XGBoost
 
-Dieses Projekt zeigt, wie man mit Machine Learning Maschinenfehler frühzeitig erkennen kann.  
-Dafür werden Prozessdaten wie Temperatur, Drehzahl, Drehmoment und Werkzeugverschleiß ausgewertet.
+Dieses Projekt demonstriert die frühzeitige Erkennung von Maschinenfehlern mithilfe von Machine Learning. Als Datenbasis dient der [Machine Predictive Maintenance Classification Datensatz von Kaggle](https://www.kaggle.com/datasets/shivamb/machine-predictive-maintenance-classification). 
+
+Anhand von Prozessparametern wie Luft- und Prozesstemperatur, Drehzahl, Drehmoment und Werkzeugverschleiß wird ein Modell trainiert, das potenzielle Ausfälle klassifiziert, bevor sie auftreten.
 
 ## Erster Schritt: Korrelationsanalyse
 
