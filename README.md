@@ -4,7 +4,24 @@ Dieses Projekt demonstriert die frühzeitige Erkennung von Maschinenfehlern mith
 
 Anhand von Prozessparametern wie Luft- und Prozesstemperatur, Drehzahl, Drehmoment und Werkzeugverschleiß wird ein Modell trainiert, das potenzielle Ausfälle klassifiziert, bevor sie auftreten.
 
-## Erster Schritt: Korrelationsanalyse
+## Evaluation & Metriken
+
+Bei der Analyse von Predictive-Maintenance-Daten ist die herkömmliche **Korrektklassifizierungsrate (Accuracy)** oft irreführend. In diesem Datensatz liegt ein signifikantes Klassenungleichgewicht (**Class Imbalance**) vor:
+
+* **Majoritätsklasse (Kein Fehler):** 9.661 Instanzen (~96,6 %)
+* **Minoritätsklasse (Fehler):** 339 Instanzen (~3,4 %)
+
+Ein Klassifikator, der pauschal immer „Kein Fehler“ vorhersagt, würde eine Accuracy von **96,6 %** erreichen. Trotz dieses hohen Wertes wäre das Modell für den industriellen Einsatz wertlos, da es **0 % der tatsächlichen Maschinenausfälle** identifizieren würde. Dieses Phänomen wird auch als „Accuracy-Paradoxon“ bezeichnet.
+
+Um den realen Nutzen des Modells sicherzustellen, wurden bei der Evaluierung folgende Metriken priorisiert:
+
+1.  **Recall (Trefferquote):** Fokus auf die Minimierung von *False Negatives* (übersehene Fehler), um ungeplante Stillstandszeiten und teure Folgeschäden zu vermeiden.
+2.  **Precision (Genauigkeit):** Minimierung von *False Positives* (Fehlalarme), um unnötige Wartungszyklen und Kosten zu reduzieren.
+3.  **Confusion Matrix:** Detaillierte Analyse der Fehlklassifikationen, insbesondere der Abgrenzung zwischen verschiedenen Ausfallarten und dem Normalbetrieb.
+
+Durch den Einsatz von **SMOTE** (Synthetic Minority Over-sampling Technique) während der Trainingsphase wurde gezielt die Sensitivität des Modells gegenüber der unterrepräsentierten Fehlerklasse gesteigert.
+
+## Korrelationsanalyse
 
 Als erster Schritt wurde mit der Datei `correlation.py` eine Korrelationsanalyse durchgeführt.  
 Damit konnten die numerischen Merkmale des Datensatzes zunächst grundlegend untersucht und erste Zusammenhänge erkannt werden.
