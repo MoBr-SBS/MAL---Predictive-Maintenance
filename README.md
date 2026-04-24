@@ -92,7 +92,6 @@ Durch die Einführung dieser berechneten Merkmale konnte die Modellperformance i
 ## Training
 
 Für die Vorhersage wurde ein XGBoost-Modell verwendet.  
-Vor dem Training wurden die Daten vorbereitet, neue Features erzeugt und die Klassen mit SMOTE ausgeglichen.  
 Für eine ausführlichere Quellcode-Dokumentation siehe `documentation/xgboost_FT.ipynb`.
 
 ## Confusion Matrix
