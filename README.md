@@ -29,7 +29,7 @@ Damit konnten die numerischen Merkmale des Datensatzes zunächst grundlegend unt
 Diese Analyse war wichtig, um ein besseres Verständnis für die Daten zu bekommen und auffällige Beziehungen zwischen den Variablen zu finden.  
 Darauf aufbauend wurden anschließend Scatterplots erstellt und später das Modell trainiert.
 
-## Datenanalyse und Korrelation
+## Visualisierung der Daten
 
 Zur weiteren Auswertung wurden mehrere Scatterplots erstellt, um Zusammenhänge zwischen den Merkmalen sichtbar zu machen.  
 Die blauen Punkte stehen für normale Zustände (`Target = 0`), die roten Punkte für Fehlerfälle (`Target = 1`).
@@ -68,6 +68,26 @@ Trotzdem ist der Plot interessant, weil man sieht, dass bei höherem Verschleiß
 <p align="center">
   <img src="images/Korrelation_3.png" width="700">
 </p>
+
+## Feature Engineering
+
+Um die Vorhersagekraft des Modells zu steigern, wurden aus den bestehenden Rohdaten neue, physikalisch motivierte Merkmale (Features) abgeleitet. Diese helfen dem Modell, komplexe Zusammenhänge zwischen den Sensorwerten besser zu erfassen.
+
+### Generierte Merkmale:
+
+1.  **Temp_Diff (Temperaturdifferenz):**
+    * **Formel:** `Process temperature [K]` - `Air temperature [K]`
+    * **Hintergrund:** Diese Differenz ist ein Indikator für die thermische Belastung und die Effizienz der Wärmeabfuhr. Ein plötzlicher Anstieg der Differenz kann auf eine Überhitzung oder einen Defekt im Kühlsystem hindeuten.
+
+2.  **Power (Mechanische Leistung):**
+    * **Formel:** `Torque [Nm]` * `Rotational speed [rpm]`
+    * **Hintergrund:** Die mechanische Leistung beschreibt die tatsächliche Arbeitslast der Maschine. Da Fehler oft bei extremen Belastungen auftreten, liefert dieses kombinierte Feature eine präzisere Information als die Einzelbetrachtung von Drehmoment und Drehzahl.
+
+3.  **Wear_Power_Interaction (Verschleiß-Leistungs-Interaktion):**
+    * **Formel:** `Tool wear [min]` * `Power`
+    * **Hintergrund:** Dieses Feature modelliert die kumulative Belastung. Ein hoher Werkzeugverschleiß ist kritischer, wenn die Maschine gleichzeitig unter hoher Last (Power) arbeitet. Die Interaktion bildet somit das Risiko eines Bauteilversagens bei hoher Beanspruchung und fortgeschrittenem Verschleiß ab.
+
+Durch die Einführung dieser berechneten Merkmale konnte die Modellperformance insbesondere bei der Identifikation spezifischer Fehlertypen (wie z. B. *Power Failure* oder *Heat Dissipation Failure*) signifikant verbessert werden.
 
 ## Training
 
