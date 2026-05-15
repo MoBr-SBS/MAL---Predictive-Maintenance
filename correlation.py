@@ -1,6 +1,6 @@
 import pandas as pd
 
-path = "Data/predictive_maintenance.csv"
+path = "data/predictive_maintenance.csv"
 data = pd.read_csv(path, delimiter=',')
 
 
